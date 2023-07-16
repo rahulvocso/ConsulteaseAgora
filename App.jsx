@@ -32,7 +32,7 @@ import setupSocket from './src/socket/socket-client/setupSocket.js'; //socket
 
 const Stack = createNativeStackNavigator();
 
-// APP COMPONENT
+// APP COMPONENT 
 function App() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
