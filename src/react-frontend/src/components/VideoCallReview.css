@@ -1,0 +1,30 @@
+.videoCallReview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+  text-align: center;
+}
+.videoCallReview h3 {
+  color: #737373;
+  font-size: 0.9rem;
+  padding-bottom: 0.4rem;
+  line-height: 1.5rem;
+}
+
+.reviewStars {
+  margin-top: 0;
+}
+
+.submitButtons {
+  margin-top: 40px;
+  display: block;
+  font-size: 1;
+}
+
+.feedbackBox {
+  margin-top: 10px;
+  color: #737373;
+  font-size: 0.9rem;
+}

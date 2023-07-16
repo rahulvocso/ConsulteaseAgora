@@ -1,0 +1,12 @@
+{
+    "SERVER_URL": "https://example.com/api/",
+    "CURRENCY":{
+      "SYMBOL":"₹",
+      "CODE":"INR",
+      "NAME":""
+    },
+    "RATES":{
+      "VIDEO_CALL":"129",
+      "AUDIO_CALL":"999"
+    } 
+  }

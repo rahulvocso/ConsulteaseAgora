@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [ "T3KYC247B8.it.honeyside.argan" ],
+        "paths": ["*"]
+      }
+    ]
+  }
+}

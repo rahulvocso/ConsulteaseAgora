@@ -1,0 +1,69 @@
+.app-logo{
+    width:150px;
+}
+
+ion-backdrop
+{
+    z-index: 100!important;
+}
+.login-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
+.login-box h3{
+    margin-top:2rem;
+    font-size: 1.75rem;
+}
+.login-box ion-item{
+    margin-top:1rem;
+    width: 80%;
+    max-width:300px;
+}
+.login-otp-box #ion-react-wrapper{
+    padding:3rem;
+    background-color:#fff;
+    color:#000;
+    text-align:center;
+}
+
+.login-otp-box .otp {
+    display: flex;
+    flex-direction: row!important;
+    justify-content: center;
+    margin: 2rem;
+}
+.login-otp-box .otp input {
+    width: 40px;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid #cacaca;
+    border-radius: 5px !important;
+    margin-right: 12px;
+    text-align: center;
+    font-size:1.5rem;
+    color: #000;
+
+}
+
+.login-box ion-input
+{
+    margin-top:.5rem;
+    font-size: 1.75rem;
+    letter-spacing: 8px;
+    text-align: center;
+}
+.login-box ion-button{
+    margin-top:3rem;
+    width: 80%;
+    text-transform: capitalize;
+    font-size: 1rem;
+    height: 2.5rem;
+    max-width:300px;
+}
+.login-box ion-label{
+    margin-top:1rem;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,8 @@
+.timePicker-Grid ion-row {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+}
+
+.timePickerModalContent {
+  position: absolute;
+  top: 0;
+}

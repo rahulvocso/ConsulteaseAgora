@@ -1,0 +1,136 @@
+ion-search-bar {
+  font-size: 3vw;
+}
+
+.recentSearch-Item {
+  text-align: center;
+  color: #92949c;
+}
+
+.searchPageContainer ion-card-title,
+.recentSearchesContainer-Title,
+.searchPageContainer ion-title {
+  padding: 10px 10px 10px 10px;
+  font-weight: 600;
+  color: #737373;
+  font-size: 1rem;
+}
+/*Recent search styles*/
+.recentSearch-Item-Holder:first-child {
+  margin: 0;
+}
+.recentSearch-Item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: space-evenly;
+  padding: 1vw 3vw 1vw 3vw;
+  height: max-content;
+  background: transparent;
+}
+.recentSearch-Item div {
+  display: flex;
+  align-items: center;
+}
+.recentSearch-Item ion-card-subtitle {
+  word-break: break-all;
+  width: 80vw;
+  padding: 0 5vw;
+  text-align: start;
+}
+.recentSearch-Item ion-icon {
+  color: #92949c;
+  font-size: 1.2rem;
+  min-width: max-content;
+}
+.recentSearch-Item .item2 {
+  align-self: flex-start;
+}
+
+/*Trending profile and Searched profile styles */
+.trendingProfile,
+.searchedProfile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1vh 3vw 0 5vw;
+  object-fit: contain;
+  word-break: keep-all;
+  margin-bottom: 1vh;
+  /* letter-spacing: 0.1vw; */
+}
+.trendingProfileAvatar,
+.searchedProfileAvatar {
+  padding-right: 20px;
+}
+.trendingProfile-TextDetail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.searchedProfile-TextDetail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0 0 0 20px;
+}
+.trendingProfile-TextDetail h5,
+.searchedProfile-TextDetail h5 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.8vw;
+}
+.trendingProfile-TextDetail p,
+.searchedProfile-TextDetail p {
+  color: #737373;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.searchResults-Heading {
+  margin: 1vh 0 1vh 0vh;
+}
+/* .searchedProfile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0vh 4vw 0vh 0;
+  align-items: center;
+  object-fit: contain;
+  word-break: keep-all;
+  padding-left: 25px;
+}
+.searchedProfile ion-avatar {
+}
+.searchedProfile-TextDetail {
+  padding: 0;
+  margin: 0;
+  padding-left: 5vw;
+}
+
+.searchedProfile-TextDetail h5 {
+  padding: 0;
+  word-break: keep-all;
+  font-size: 1rem !important;
+  font-weight: 600;
+  word-break: break-all;
+  color: #232323;
+}
+
+.profileRating span {
+  color: #737373;
+} */
+/* .searchedProfile avatar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border: 3px solid #27a961;
+  height: 800px;
+  width: 800px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  border-radius: 10px;
+} */

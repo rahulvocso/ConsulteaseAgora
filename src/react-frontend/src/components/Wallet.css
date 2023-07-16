@@ -1,0 +1,313 @@
+* {
+  box-sizing: border-box;
+}
+
+.balanceCard {
+  padding: 5px;
+}
+
+.totalAB ion-card-title {
+  font-size: 2.5rem;
+  padding-bottom: 0;
+  color: #262626;
+  align-self: center;
+  word-break: break-all;
+}
+
+.totalAB ion-card-subtitle {
+  font-size: 1.8rem;
+}
+
+.totalAB {
+  display: grid;
+  justify-content: flex-start;
+  align-content: space-between;
+}
+
+.addWithdraw-Container {
+  display: grid;
+  align-content: space-around;
+}
+
+/* .addWithdraw-Container ion-button {
+} */
+
+.showAvailHold ion-col {
+  padding-top: 1rem;
+}
+
+.showAvailHold ion-card-title {
+  font-size: 1.5rem;
+  /* color: #262626; */
+
+  word-break: break-all;
+}
+
+.showAvailHold ion-card-subtitle {
+  font-size: 1rem;
+  color: #666666;
+}
+ion-segment-button {
+  font-weight: 600;
+}
+/*** CSS for TransactionCard component ***/
+.transactionCard p {
+  font-size: 0.8rem;
+  /* word-break: break-all; */
+  word-break: break-all;
+
+  line-break: anywhere;
+}
+.transactionCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.transactionCard::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.transactionCardId {
+  align-self: center;
+}
+.transactionCardId p {
+  font-size: 0.6rem;
+  letter-spacing: 0.05rem;
+  margin-bottom: 0px;
+  color: #666666;
+}
+.transactionCardList {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  align-content: center;
+  width: 100%;
+}
+.transactionCardCrDb {
+  font-size: 24px;
+  /* border: 2px solid red; */
+  padding-top: 4px;
+}
+.debitIcon {
+  font-size: 28px;
+  margin-right: 6px;
+}
+.creditIcon {
+  margin-right: 10px;
+}
+/* .transactionCardCrDb ion-icon {
+  font-size: 24px;
+} */
+
+.transactionCard4 {
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: auto auto;
+  row-gap: 5px;
+  column-gap: 10px;
+  justify-content: space-between;
+  /* align-items: space-between; */
+  /* align-content: center; */
+  letter-spacing: 0.03rem;
+  white-space: wrap;
+  width: 100%;
+  padding: 5px;
+  overflow-wrap: break-word;
+  /* border: 1px solid red; */
+  color: #666666;
+}
+
+.transactionCardDetail p {
+  grid-area: 1/ 1/ 2/ 2;
+  margin: 0px;
+  /* border: 1px solid red; */
+}
+
+.transactionCardAmount {
+  grid-area: 1/ 2/ 2/ 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* border: 1px solid red; */
+  /* padding: 0; */
+  align-self: end;
+}
+.transactionCardAmount p {
+  position: relative;
+  bottom: 2px;
+  color: #3db271;
+  font-size: 1.5rem;
+  /* border: 1px solid red; */
+  margin: 0;
+  margin-left: -3px;
+}
+.transactionCardAmount img {
+  /* color: #4c6cad; */
+  width: 1.5rem;
+  max-height: 1.5rem;
+  text-align: end;
+  /* border: 1px solid red; */
+  /* padding: 0;
+  margin: 0; */
+}
+.redRupeeSymbol {
+  filter: brightness(0%) saturate(100%) invert(36%) sepia(93%) saturate(3554%)
+    hue-rotate(343deg) brightness(103%) contrast(100%);
+}
+.greenRupeeSymbol {
+  filter: brightness(0%) saturate(100%) invert(54%) sepia(33%) saturate(678%)
+    hue-rotate(94deg) brightness(101%) contrast(97%);
+}
+/* border: 1px solid red; */
+
+.transactionCardDate {
+  grid-area: 2/ 1/ 3/ 2;
+  font-size: 0.8rem;
+  /* border: 1px solid red; */
+}
+
+.transactionCardToFrom {
+  grid-area: 2/ 2/ 3/ 3;
+}
+.transactionCardToFrom p {
+  /* text-align: end; */
+  margin: 0px;
+  /* border: 1px solid red; */
+}
+
+.transactionCardId {
+  grid-area: 3/ 1/ 4/ 3;
+  margin-top: 5px;
+  /* border: 1px solid red; */
+  /* margin: 0 auto; */
+  /* text-align: end; */
+}
+.transactionCardId p {
+  margin-top: 0;
+  /* letter-spacing: 1.5vw; */
+  font-size: 0.7rem;
+  color: #4c6cad;
+}
+
+/* @media only screen and (min-width: 900px) {
+  .transactionCard {
+    display: flexbox;
+    justify-content: space-evenly;
+  }
+  .transactionCardRow {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    justify-content: baseline;
+    align-content: flex-start;
+    align-items: center;
+  }
+  .transactionCardCrDb {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .transactionCardAmount {
+    grid-area: 1/ 2/ 2/ 3;
+    text-align: center;
+  }
+  .transactionCardAmount ion-icon {
+    position: relative;
+    top: 3px;
+  }
+  .transactionCardDate {
+    grid-area: 1/ 3/ 2/ 4;
+  }
+  .transactionCardTOFrom {
+    grid-area: 1/ 4/ 2/ 5;
+  }
+  .transactionCardDetail {
+    grid-area: 1/ 5/ 2/ 6;
+  }
+  .transactionCardId {
+    grid-area: 1/ 6/ 2/ 7;
+  }
+} */
+
+/*
+.transactionCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .walletCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+
+  .totalBalance {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /
+  }
+
+  .addWithdraw-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    /
+  }
+
+  .transactionCard {
+    display: grid;
+    justify-content: space-between;
+    align-content: center;
+    grid-template-columns: auto auto;
+  }
+  .transactionCardIndex {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .transactionCardDate {
+    grid-area: 1/ 2/ 2/ 3;
+  }
+  .transactionCardAmount {
+    grid-area: 2/ 1/ 3/ 2;
+  }
+  .transactionCardTOFrom {
+    grid-area: 2/ 2/ 3/ 3;
+  }
+  .transactionCardDetail {
+    grid-area: 3/ 1/ 4/ 2;
+  }
+  .transactionCardId {
+    grid-area: 3/ 2/ 4/ 3;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .transactionCard {
+    display: grid;
+    justify-content: space-between;
+    align-content: center;
+    grid-template-columns: auto auto auto;
+  }
+  .transactionCardIndex {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .transactionCardDate {
+    grid-area: 1/ 2/ 2/ 3;
+  }
+  .transactionCardAmount {
+    grid-area: 1/ 3/ 2/ 4;
+  }
+  .transactionCardTOFrom {
+    grid-area: 2/ 1/ 3/ 2;
+  }
+  .transactionCardDetail {
+    grid-area: 2/ 2/ 3/ 3;
+  }
+  .transactionCardId {
+    grid-area: 2/ 3/ 3/ 4;
+  }
+}
+*/

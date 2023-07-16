@@ -1,0 +1,59 @@
+.availability{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+	margin:0 1.5rem;
+}
+.availability ion-item{
+    margin-top:0rem;
+    --padding-start:0px;
+	border-bottom: none!important;
+}
+.availability ion-row{
+    margin-top:0rem;
+}
+.availability ion-card-header ion-toggle {
+	float: right;
+}
+
+.widecol{
+    flex: 2;
+    padding:0.6rem 0.3rem;
+
+}
+
+
+ 
+ion-segment{
+    margin: 10px 0px;
+    background-color:var(--ion-color-tertiary-tint);
+    border-radius: 50px;
+    padding: 0px;
+}
+ion-segment-button{
+    margin: 0px;
+
+}
+ion-segment-button::part(indicator-background) {
+    background: var(--ion-color-primary);
+  } 
+  /* iOS styles */
+  ion-segment-button.ios::part(native) {
+    color: var(--ion-color-primary);
+  }
+  .segment-button-checked.ios::part(native) {
+    color: #fff;
+  }
+  ion-segment-button.ios::part(indicator-background) {
+    border-radius:20px;
+  }
+
+
+
+
+ion-toast.successToast{
+    background-color:var(--ion-color-primary);
+}
+ion-toast.errorToast{
+    background-color:var(--ion-color-dark);
+}

@@ -1,0 +1,21 @@
+.ion-padding{
+    padding:1.3rem;
+}
+.ion-margin{
+    margin:1.3rem;
+}
+ 
+.personalInfo-form ion-item{
+    margin-top:0rem;
+    width: 100%;
+    --padding-start:0px;
+}
+ 
+ 
+ion-toast.successToast{
+    background-color:var(--ion-color-primary);
+}
+ion-toast.errorToast{
+    background-color:var(--ion-color-dark);
+}
+ 

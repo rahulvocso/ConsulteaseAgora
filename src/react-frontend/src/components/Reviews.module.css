@@ -1,0 +1,162 @@
+.talkCard {
+
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	background-color: #fff;
+	border-bottom:0.5px solid #ccc;
+	margin: none!important;
+}
+.talkCard .proDetails {
+
+	display: flex;
+	flex-direction: row!important;
+}
+.talkCard .talkDetails {
+	margin-left:82px;
+	margin-top:14px;
+}
+.talkCard:not(:first-child) {
+	margin-top: 0rem;
+}
+
+.talkCard:last-child {
+
+	border-bottom:none!important;
+}
+
+
+.upcomingCard {
+
+	background-color: var(--ion-color-primary);
+	color: white;
+}
+
+.cardTitle {
+
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	align-items: center;
+	color: white;
+}
+
+.cardTitle ion-icon {
+	
+	border-radius: 500px;
+	padding: 0.2rem;
+	margin-right: 0.75rem;
+	background-color: var(--ion-color-primary);
+	margin-top: -0.2rem;
+}
+
+.upcomingCard .cardTitle ion-icon {
+
+	background-color: white;
+}
+
+.talkTitle {
+	margin-top: -10px;
+	margin-left:20px;
+}
+.cardTitle {
+	margin-bottom: 10px;
+}
+
+
+.talkTitle h3 {
+
+	font-size: 1.2rem !important;
+	font-weight: 500;
+}
+
+.talkDate {
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+	margin-top: 0.5rem;
+}
+
+.talkSpeakers {
+
+	display: flex;
+	flex-direction: row;
+	margin-top: 0.5rem;
+}
+
+.talkSpeaker {
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 3.5rem;
+	width: 3.5rem;
+	border-radius: 12px;
+	margin-right: 0.2rem;
+	background-color: var(--ion-color-primary);
+}
+
+.talkSpeaker img {
+
+	height: 3rem;
+	width: 3rem;
+}
+
+.talkDetails {
+
+	display: flex;
+	justify-content: space-between;
+	margin-top: 1.5rem;
+}
+
+.detailCount {
+
+	display: flex;
+	align-content: center;
+	align-items: center;
+	font-weight: 500;
+	font-size: 0.9rem;
+}
+
+.detailCount ion-icon {
+
+	font-size: 1.2rem;
+	margin-right: 0.3rem;
+}
+.sb-avatar img,  ion-avatar img
+{
+/*	border: 3px solid #27a961;*/
+	height:80px!important;
+	width:80px!important;
+	max-width: 100px!important;
+	max-height: 100px!important;
+	border-radius:50px;
+}
+ 
+
+ion-avatar {
+	--border-radius:8px;
+	margin-right: 1rem;
+}
+
+.item-avatar-important  {     
+	width:100% !important;  
+	height : 100% !important;  
+	max-width: 100px !important;   
+	max-height: 100px !important;  
+  }
+
+
+  .proCardImportant {
+
+	 
+	padding: 1rem;
+	background-color: #fff;
+	margin-right: 0.8rem!important;
+	margin-bottom: 0.8rem!important;
+
+
+}
+

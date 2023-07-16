@@ -1,0 +1,261 @@
+* {
+  box-sizing: border-box;
+}
+
+/* .callIcon ion-icon {
+  position: relative;
+  top: 40%;
+} */
+
+.inboxCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-between;
+  align-content: space-between;
+  /* overflow-wrap: break-word;
+  white-space: wrap; */
+  /* border: 1px solid red; */
+
+  word-break: break-all;
+  color: #666666;
+}
+.inboxCard::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.inboxCard div {
+  font-size: 0.9rem;
+  /* letter-spacing: 0.05rem; */
+  margin-bottom: 0px;
+  color: #666666;
+}
+.inboxCard p {
+  font-size: 0.8rem;
+  word-break: break-all;
+  line-break: anywhere;
+  margin: 0;
+}
+.callIcon ion-icon {
+  height: 100%;
+  align-self: center;
+  margin-right: 10px;
+  font-size: 16px;
+}
+.callIcon-audioVideo {
+  padding-bottom: 15px;
+}
+.callCardDetails {
+  width: 90%;
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 3px;
+  column-gap: 20px;
+  justify-content: space-between;
+  /* align-items: center; */
+  /* align-content: center; */
+  letter-spacing: 0.03rem;
+  white-space: wrap;
+  width: 100%;
+  padding: 0 5px;
+  overflow-wrap: break-word;
+
+  color: #666666;
+}
+
+.callerName p {
+  color: #737373;
+  font-weight: 600;
+  margin: 0px;
+  /* border: 1px solid red; */
+}
+
+.callDuration,
+.callAmount {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /* border: 1px solid red; */
+  /* padding: 0; */
+  align-self: end;
+}
+.callDuration p,
+.callAmount p {
+  position: relative;
+  bottom: 0px;
+  /* color: #3db271; */
+  /* font-size: 1.5rem; */
+  /* border: 1px solid red; */
+  margin: 0;
+  margin-left: 0px;
+}
+.callDuration ion-icon {
+  width: 1rem;
+  max-height: 1rem;
+  text-align: end;
+  margin-left: 5px;
+  /* border: 1px solid red; */
+  filter: invert(57%) sepia(46%) saturate(528%) hue-rotate(94deg)
+    brightness(93%) contrast(91%);
+  padding: 0;
+}
+.callAmount img {
+  /* color: #4c6cad; */
+  width: 1rem;
+  max-height: 1rem;
+  text-align: end;
+  margin-right: -3px;
+  margin-top: -1px;
+  /* filter: invert(57%) sepia(46%) saturate(528%) hue-rotate(94deg)
+    brightness(93%) contrast(91%); */
+  /* border: 1px solid red; */
+}
+
+.callCardDetails {
+  display: grid;
+  justify-content: space-between;
+  align-content: center;
+  grid-template-columns: auto auto;
+}
+.callerName {
+  margin-right: 20px;
+  grid-area: 1/ 1/ 2/ 2;
+}
+.callDuration {
+  grid-area: 1/ 2/ 2/ 3;
+}
+.callExpertise {
+  grid-area: 2/ 1/ 3/ 2;
+  /* border: 1px solid red; */
+}
+.callId {
+  grid-area: 2/ 2/ 3/ 3;
+  /* border: 1px solid red; */
+}
+.callDateTime {
+  grid-area: 3/ 1/ 4/ 2;
+  font-size: 0.8rem;
+  padding: 0;
+  /* border: 1px solid red; */
+}
+.callAmount {
+  grid-area: 3/ 2/ 4/ 3;
+}
+
+/* @media only screen and (min-width: 900px) {
+  .callIcon ion-icon {
+    position: relative;
+    top: 0;
+  }
+  .callDuration p {
+    display: inline;
+  }
+  .callDuration ion-icon {
+    position: relative;
+    top: 17%;
+  }
+
+  .inboxCard {
+    display: flexbox;
+    justify-content: space-evenly;
+  }
+  .callCardDetails {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    width: 90%;
+  }
+  .callIcon {
+    width: 10%;
+  }
+  .callDateTime {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .callerName {
+    grid-area: 1/ 2/ 2/ 3;
+  }
+  .callExpertise {
+    grid-area: 1/ 3/ 2/ 4;
+  }
+  .callDuration {
+    grid-area: 1/ 4/ 2/ 5;
+  }
+  .callAmount {
+    grid-area: 1/ 5/ 2/ 6;
+  }
+  .callId {
+    grid-area: 1/ 6/ 2/ 7;
+  }
+} */
+
+/*
+callIcon
+callDateTime
+callerName
+callExpertise
+callDuration
+callAmount
+callId
+callMoreInfo
+*/
+
+/*
+.callerName {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .callDuration {
+    grid-area: 1/ 2/ 2/ 3;
+  }
+  .callExpertise {
+    grid-area: 2/ 1/ 3/ 2;
+  }
+  .callId {
+    grid-area: 2/ 2/ 3/ 3;
+  }
+  .callDateTime {
+    grid-area: 3/ 1/ 4/ 2;
+  }
+  .callAmount {
+    grid-area: 3/ 2/ 4/ 3;
+  }
+  .callIcon {
+    grid-area: 4/ 1/ 5/ 2;
+  }
+  .callMoreInfo {
+    grid-area: 4/ 2/ 5/ 3;
+  }
+*/
+
+/*
+@media only screen and (min-width: 900px) {
+  .inboxItem {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+  }
+  .callerName {
+    grid-area: 1/ 1/ 2/ 2;
+  }
+  .callDuration {
+    grid-area: 1/ 2/ 2/ 3;
+  }
+  .callExpertise {
+    grid-area: 1/ 3/ 2/ 4;
+  }
+  .callId {
+    grid-area: 1/ 4/ 2/ 5;
+  }
+  .callDateTime {
+    grid-area: 2/ 1/ 3/ 2;
+  }
+  .callAmount {
+    grid-area: 2/ 2/ 3/ 3;
+  }
+  .callIcon {
+    grid-area: 2/ 3/ 3/ 4;
+  }
+  .callMoreInfo {
+    grid-area: 2/ 4/ 3/ 5;
+  }
+}
+*/

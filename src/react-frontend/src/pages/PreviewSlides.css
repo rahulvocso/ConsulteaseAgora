@@ -1,0 +1,57 @@
+.isSwiper {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  --bullet-background-active: white;
+  --bullet-background: rgb(88, 87, 87);
+  background-color: rgb(160, 195, 217);
+  border-bottom-right-radius: 2.5rem;
+}
+
+.sS2 ion-img,
+.sS1 ion-img {
+  position: relative;
+  bottom: 18%;
+  width: 8rem;
+}
+
+.sS3 {
+  display: flex;
+  flex-direction: column;
+  text-align: space-around;
+}
+.sS3 .app-logo {
+  width: 7rem;
+}
+.sS3 h2 {
+  color: #181818;
+  font-family: Verdana, Geneva, Tahoma, sans-serif, serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 4vh 0 7vh 0;
+}
+.sampleImgPreviewScreen3 {
+  object-fit: contain;
+  object-position: middle;
+  width: 73%;
+  height: 28vh;
+  position: relative;
+  right: 1.5rem;
+}
+
+.nonSlide-elements {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 30vh;
+}
+.nonSlide-elements ion-label {
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+}
+.continue-btn {
+  margin: 0 14%;
+}

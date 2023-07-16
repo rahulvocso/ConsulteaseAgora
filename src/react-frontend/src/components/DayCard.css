@@ -1,0 +1,30 @@
+.dayCard{
+	width: 100%;
+	margin:0;
+	box-shadow:none;
+	border-radius: 0rem;
+}
+.dayCard ion-label{
+    margin-top:0rem;
+    font-size: 0.9rem;
+}
+.dayCard ion-item{
+    margin-top:0rem;
+    width: 100%;
+    --padding-start:0px;
+	border-bottom: none;
+	border-style:none;
+}
+.dayCard .card-content-md
+{
+	padding-bottom:0px;
+}
+.dayCard ion-item ion-icon {
+    margin-right: 0rem;
+}
+.dayCard ion-card-header ion-button {
+	float: right;
+}
+.dayCard ion-card-header ion-toggle {
+	float: right;
+}

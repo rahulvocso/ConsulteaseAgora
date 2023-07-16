@@ -1,0 +1,83 @@
+.profilePage {
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5px 1.5rem 1.5rem 1.5rem;
+  background-color: #fff;
+}
+.profile .proDetails {
+  display: flex;
+  flex-direction: row !important;
+}
+.profile .talkDetails {
+  margin-left: 82px;
+  margin-top: 14px;
+}
+.profile:not(:first-child) {
+  margin-top: 0rem;
+}
+
+.profile:last-child {
+  border-bottom: none !important;
+}
+
+.proTitle {
+  margin-top: -10px;
+  margin-left: 20px;
+}
+
+.proTitle h3 {
+  font-size: 1.2rem !important;
+  font-weight: 500;
+}
+
+.detailCount {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.detailCount ion-icon {
+  font-size: 1.2rem;
+  margin-right: 0.3rem;
+}
+
+.ProfileAvatar {
+  margin-right: 1.6rem;
+}
+.ProfileAvatar .sb-avatar img,
+.ProfileAvatar img {
+  height: 100px !important;
+  width: 100px !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
+  border-radius: 50px;
+}
+
+ion-img {
+  width: 100hw !important;
+}
+ion-button.callButton {
+  width: 46%;
+}
+ion-button p {
+  font-size: 0.7rem;
+  flex: 50%;
+  flex-flow: column;
+}
+ion-segment {
+  border-bottom: 1px;
+}
+ion-chip {
+  height: 1.8rem;
+}
+.warning {
+  width: 100%;
+  padding: 10px;
+  background-color: #fafafa; /* Red */
+  color: #8a8a8a;
+}

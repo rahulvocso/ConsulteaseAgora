@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="95.892" height="82.426" viewBox="0 0 95.892 82.426">
+  <g id="Group_3" data-name="Group 3" transform="translate(-1192 -492.574)">
+    <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(1192 506)" fill="#fff" stroke="#4c6cad" stroke-width="5">
+      <rect width="71" height="69" rx="12" stroke="none"/>
+      <rect x="2.5" y="2.5" width="66" height="64" rx="9.5" fill="none"/>
+    </g>
+    <text id="_" data-name="₹" transform="translate(1214 561)" fill="#6fb99d" font-size="50" font-family="SegoeUI-Semibold, Segoe UI" font-weight="600"><tspan x="0" y="0">₹</tspan></text>
+    <rect id="Rectangle_8" data-name="Rectangle 8" width="43" height="26" transform="translate(1233 494)" fill="#fff"/>
+    <rect id="Rectangle_7" data-name="Rectangle 7" width="32" height="33" transform="translate(1249 497)" fill="#fff"/>
+    <line id="Line_2" data-name="Line 2" x2="38" transform="translate(1246.5 508.5)" fill="none" stroke="#4c6cad" stroke-width="4"/>
+    <path id="Path_1" data-name="Path 1" d="M0,0,13.919,13.685" transform="translate(1270 494)" fill="none" stroke="#4c6cad" stroke-width="4"/>
+    <line id="Line_4" data-name="Line 4" x1="16" y2="15.5" transform="translate(1270.5 507.5)" fill="none" stroke="#4c6cad" stroke-width="4"/>
+  </g>
+</svg>
