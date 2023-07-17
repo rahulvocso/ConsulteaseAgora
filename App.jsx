@@ -169,7 +169,7 @@ function App() {
         })
       : null;
     return () => {
-      Utils.socket.off('messageDirectPrivate');
+      Utils.socket.off('callMessage');
     };
   }, [socketId]);
 
@@ -182,7 +182,7 @@ function App() {
           header: ()=>(null),
         }}
       >
-          {/* <Stack.Screen name="WebView" component={ConsultEaseWebview} /> */}
+          <Stack.Screen name="WebView" component={ConsultEaseWebview} />
           <Stack.Screen name="CallerAgoraUI" component={CallerAgoraUI}/>
           {/* <Stack.Screen name="CalleeAgoraUI" component={CalleeAgoraUI}/> */}
           <Stack.Screen name="VideoCallerPrompt" component={VideoCallerPromptScreen} />

@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import AgoraUIKit from 'agora-rn-uikit';
 import {StyleSheet, Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import Utils from '../utils';
 import Timer from './Timer';
 import AvatarSample from '../assets/images/AvatarSample.png';
@@ -12,12 +12,14 @@ import useFetch from '../hooks/useFetch';
 const { get, post } = useFetch('https://callingserver.onrender.com/api/v1/');
 
 const CallerAgoraUI = () => {
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
     const calleeDetails = useSelector(state => state.webview.calleeDetails)
     const socketId = useSelector((state) => state.webview.socket.id);
     const calleeSocketId = useSelector((state)=> state.webview.calleeSocketId);
     const consulteaseUserProfileData = useSelector((state) => state.webview.consulteaseUserProfileData)
 
-    const [videoCall, setVideoCall] = useState(false);
+    const [videoCall, setVideoCall] = useState(true);
     const [userCount, setUserCount] = useState(0);
     const agoraUIKitRef = useRef(null);
 
@@ -40,6 +42,7 @@ const CallerAgoraUI = () => {
                 agoraUIKitRef.current = null;
             }
             setVideoCall(false);
+            navigation.navigate('WebView');
         },
         onUsersJoined: () => {
             setUserCount((prevCount) => prevCount + 1);
@@ -70,7 +73,7 @@ const CallerAgoraUI = () => {
     }, [consulteaseUserProfileData, calleeDetails]);
 
     useEffect(() => {
-        calleeSocketId ? initCall() : null; // get initial call instance data
+        (calleeSocketId && calleeSocketId !== 'null') ? initCall() : null; // get initial call instance data
     },[calleeSocketId])
 
 
@@ -125,7 +128,7 @@ const CallerAgoraUI = () => {
                 // send message to callee call init
                 if (socketId && Utils.socket) {
                 (consulteaseUserProfileData && calleeDetails) ? (
-                    Utils.socket.emit("messageDirectPrivate",
+                    Utils.socket.emit("callMessage",
                         {
                             type: 'incomingVideoCall',
                             from: socketId,
@@ -156,7 +159,7 @@ const CallerAgoraUI = () => {
             }
         })
         .catch((error) => {
-            console.error('Error occurred during API call: CallerAgoraUI.js during fetchData()',error);
+            console.error('Error occurred during API call: CallerAgoraUI.js during initcall fetchData()',error);
         });
     };
 

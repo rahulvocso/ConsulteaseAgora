@@ -4,7 +4,7 @@ import Utils from '../utils';
 import useFetch from '../hooks/useFetch.js';
 const { get, post } = useFetch('https://callingserver.onrender.com/api/v1/');
 import postSocket from '../hooks/postSocket.js';
-import callMessage from 'callMessage';
+import callMessage from './callMessage';
 
 
 // let io;
@@ -68,14 +68,14 @@ const init = ({ httpServer }) => {
   });
 
   setTimeout(() => {
-    io.emit('reload');
+    Utils.io.emit('reload');
   }, 1000);
 
   Utils.logger.info('socket.io listening for events');
 };
 
 const getIO = () => {
-  return io;
+  return Utils.io;
 };
 
 const SocketIO = {

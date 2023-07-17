@@ -68,25 +68,20 @@ const VideoCalleePromptScreen = () => {
   const componentUnmountTimeoutRef =  useRef();
   const soundTimeoutRef = useRef();
 
-  // const isDarkMode = useColorScheme() === 'dark';
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
-
   const video = useSelector((state) => state.media.local.video);
   const active = useSelector((state) => !!state.media.local.video);
   const key = useSelector((state) => state.meeting.key);
   const [incomingCallAnswer, setIncomingCallAnswer]  = useState();
 
-  useEffect(() => {
-    if (socketId && callInstanceData !== undefined) {
-      dispatch(Actions.IO.joinRoom(callInstanceData._id));
-    }
-  }, [callInstanceData]);
+  // useEffect(() => {
+  //   if (socketId && callInstanceData !== undefined) {
+  //     dispatch(Actions.IO.joinRoom(callInstanceData._id));
+  //   }
+  // }, [callInstanceData]);
 
   useEffect(() => {
-    dispatch(Actions.Media.getLocalVideo());
-    dispatch(Actions.Media.getLocalAudio());
+    // dispatch(Actions.Media.getLocalVideo());
+    // dispatch(Actions.Media.getLocalAudio());
     console.log('callerDetails inside VideoCalleePrompt',callerDetails)
     console.log('callerDetails.photo inside VideoCalleePrompt', typeof callerDetails.photo)
     InCallManager.setForceSpeakerphoneOn(true);
@@ -108,7 +103,7 @@ const VideoCalleePromptScreen = () => {
     const playAudioInLoop = () => {
       sound.play();
       InCallManager.setForceSpeakerphoneOn(true);
-      soundTimeoutRef.current = setTimeout(playAudioInLoop, audioDuration);
+      // soundTimeoutRef.current = setTimeout(playAudioInLoop, audioDuration);
     };
 
      playAudioInLoop();
@@ -142,7 +137,7 @@ const VideoCalleePromptScreen = () => {
       }
       //clearInterval(ringtoneIntervalId);
       clearTimeout(soundTimeoutRef.current);
-      // !proceedToJoinCall && clearTimeout(componentUnmountTimeoutRef);
+      !proceedToJoinCall && clearTimeout(componentUnmountTimeoutRef);
     }
   }, []);
 
@@ -153,7 +148,7 @@ const VideoCalleePromptScreen = () => {
     key && dispatch({ type: 'join', name, email});
     if (socketId) {
       (socketId && Utils.socket) ? (
-        Utils.socket.emit("messageDirectPrivate",{
+        Utils.socket.emit("callMessage",{
           type: 'calleeResponse',
           from: socketId,
           to: incomingCallDetails.from,
@@ -168,7 +163,7 @@ const VideoCalleePromptScreen = () => {
   function handleCallReject(){
     if (socketId) {
       (socketId && Utils.socket) ? (
-        Utils.socket.emit("messageDirectPrivate",
+        Utils.socket.emit("callMessage",
         {
           type: 'calleeResponse',
           from: socketId,
@@ -182,8 +177,8 @@ const VideoCalleePromptScreen = () => {
     dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: false }),
     dispatch({ type: 'SET_CALL_VIEW_ON', payload: false });
     dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' });
-    dispatch(Actions.Media.releaseLocalVideo());
-    dispatch(Actions.Media.releaseLocalAudio());
+    // dispatch(Actions.Media.releaseLocalVideo());
+    // dispatch(Actions.Media.releaseLocalAudio());
     navigation.navigate('WebView');
   }
 

@@ -67,7 +67,7 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
           dispatch({ type: 'SET_CALL_VIEW_ON', payload: true });
           dispatch({ type: 'SET_CALLEE_DETAILS', payload: messageData })
           // navigation.navigate('VideoCallerPrompt');
-          navigation.navigate('AgoraUI')
+          navigation.navigate('CallerAgoraUI')
           // dispatch({ type: 'SET_CALLEE_SOCKET_ID' ,payload: messageData.calleeSocketId})
         }
         break;
@@ -178,7 +178,7 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
               // uri: 'https://64620df4656dba0fe21fb01b--super-cajeta-000cea.netlify.app'
               // uri: 'https://super-cajeta-000cea.netlify.app'
               // uri: 'https://consultease-webview.netlify.app'
-              uri: 'https://consultease.netlify.app'
+              uri: 'https://consultease.netlify.app' // https://consultease-webview.netlify.app
             }
               // : undefined
           }

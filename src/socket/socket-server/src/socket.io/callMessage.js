@@ -1,7 +1,6 @@
-import xss from 'xss';
 import Utils from '../utils';
 
-const callMessage = async ({ data, callback }) => {
+const callMessage = async ({ socket, data, callback }) => {
   Utils.logger.info(JSON.stringify(data));
   Utils.io.to(data.to).emit(
     'callMessage',
