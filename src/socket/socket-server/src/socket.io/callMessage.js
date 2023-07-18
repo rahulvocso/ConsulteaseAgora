@@ -1,11 +1,10 @@
 import Utils from '../utils';
 
-const callMessage = async ({ socket, data, callback }) => {
+const callMessage = async ({ socket, data}) => {
   Utils.logger.info(JSON.stringify(data));
   Utils.io.to(data.to).emit(
     'callMessage',
-    // JSON.stringify({content: xss(data)})  implement this in plave of next line to sanitize data
-    {content: data}   // temporary
+    {content: data}
   );
   console.log(`Message data sent to device with socket ID ${data.to}: ${data}`);
 };

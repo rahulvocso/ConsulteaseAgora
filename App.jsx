@@ -28,8 +28,6 @@ import useFetch from './src/hooks/useFetch';
 
 import setupSocket from './src/socket/socket-client/setupSocket.js'; //socket
 
-// import { disconnectSocket } from './src/socket/socket-client/index.mjs';
-
 const Stack = createNativeStackNavigator();
 
 // APP COMPONENT 
@@ -74,12 +72,12 @@ function App() {
 
 
   useEffect(() => {
-    socketId !== null || undefined
+    socketId
       ? Utils.socket.on('callMessage', (messageData) => {
           // const data = xss(JSON.parse(messageData).content);
           const message = messageData.content;
           console.log(
-            '************ Incoming messageDirectPrivate received App.js useEffect line~359********',
+            '************ Incoming callMessage received App.js useEffect line~80********',
             message.type,
             message,
           );
@@ -92,9 +90,6 @@ function App() {
               ['VideoCallerPrompt', 'VideoCalleePrompt', 'VideoCall'].includes(
                 navigation.getCurrentRoute().name,
               ),
-              `['VideoCallerPrompt', 'VideoCalleePrompt', 'VideoCall'].includes(
-                navigation.getCurrentRoute().name,
-              )`,
             );
             if (
               ['VideoCallerPrompt', 'VideoCalleePrompt', 'VideoCall'].includes(
@@ -108,17 +103,16 @@ function App() {
               dispatch({ type: 'SET_INCOMING_CALL_DETAILS', payload: message });
               dispatch({ type: 'SET_CALL_INSTANCE_DATA', payload: message.callInstanceData });
               dispatch({ type: 'SET_PEER_SOCKET_ID', payload: message.from });
-              dispatch({ type: 'meeting-key', value: xss(message.callInstanceData._id) });
-              message.callInstanceData._id ? dispatch({ type: 'meeting-errors-clear' }) : null;
+              dispatch({ type: 'meeting-key', value: message.callInstanceData._id });
               console.log(
-                'Call ************ Incoming "videocall" messageDirectPrivate received App.js useEffect line~359********',
+                'Call ************ Incoming "videocall" callmessage received App.js useEffect line~111********',
                 message,
                 JSON.stringify(message),
               );
               navigation.navigate('VideoCalleePrompt');
             } else {
               // response if callee is busy on another call
-              Utils.socket.emit('messageDirectPrivate', {
+              Utils.socket.emit('callMessage', {
                 type: 'calleeResponse',
                 from: socketId,
                 to: message.from,
@@ -130,17 +124,16 @@ function App() {
           // outgoing call back/response message from peer
           else if (message.type === 'calleeResponse') {
             console.log(
-              'Call-Response ************ Incoming "callResponse" messageDirectPrivate received App.js useEffect line~366********',
+              'Call-Response ************ Incoming "callResponse" callMessage received App.js useEffect line~130********',
               message,
               JSON.stringify(message),
             );
             message.response === 'accepted'
               ? (dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: true }),
-                navigation.navigate('Meeting'))
+                navigation.navigate('CallerAgoraUI'))
               : null;
             message.response === 'rejected'
-              ? (dispatch(Actions.Media.leaveMeeting()),
-                dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: false }),
+              ? (dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: false }),
                 dispatch({ type: 'SET_CALL_VIEW_ON', payload: false }),
                 dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' }),
                 navigation.navigate('WebView'))
@@ -153,15 +146,13 @@ function App() {
             //   :
           } else if (message.type === 'callerResponse') {
             message.response === 'disconnectedByCallerBeforeCalleeResponse'
-              ? (dispatch(Actions.Media.leaveMeeting()),
-                dispatch({ type: 'SET_CALL_VIEW_ON', payload: false }),
+              ? (dispatch({ type: 'SET_CALL_VIEW_ON', payload: false }),
                 dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' }),
                 navigation.navigate('WebView'))
               : null;
           } else if (message.type === 'callResponse') {
             message.response === 'disconnected'
-              ? (dispatch(Actions.Media.leaveMeeting()),
-                dispatch({ type: 'SET_CALL_VIEW_ON', payload: false }),
+              ? (dispatch({ type: 'SET_CALL_VIEW_ON', payload: false }),
                 dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' }),
                 navigation.navigate('WebView'))
               : null;
@@ -169,7 +160,7 @@ function App() {
         })
       : null;
     return () => {
-      Utils.socket.off('callMessage');
+      Utils.socket && Utils.socket.off('callMessage');
     };
   }, [socketId]);
 
@@ -184,7 +175,7 @@ function App() {
       >
           <Stack.Screen name="WebView" component={ConsultEaseWebview} />
           <Stack.Screen name="CallerAgoraUI" component={CallerAgoraUI}/>
-          {/* <Stack.Screen name="CalleeAgoraUI" component={CalleeAgoraUI}/> */}
+          <Stack.Screen name="CalleeAgoraUI" component={CalleeAgoraUI}/>
           <Stack.Screen name="VideoCallerPrompt" component={VideoCallerPromptScreen} />
           <Stack.Screen name="VideoCalleePrompt" component={VideoCalleePromptScreen} />
           <Stack.Screen name="CallRating" component={CallRatingScreen} />

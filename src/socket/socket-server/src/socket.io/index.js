@@ -1,15 +1,12 @@
 import { Server } from 'socket.io';
-import Utils from '../utils';
-
 import useFetch from '../hooks/useFetch.js';
 const { get, post } = useFetch('https://callingserver.onrender.com/api/v1/');
 import postSocket from '../hooks/postSocket.js';
 import callMessage from './callMessage';
+import Utils from '../utils';
 
 
-// let io;
-const map = {};
-
+let previousSocketId;
 const init = ({ httpServer }) => {
   Utils.io = new Server(httpServer, {
     cors: {
@@ -20,14 +17,38 @@ const init = ({ httpServer }) => {
   // Utils.io = io;
 
   Utils.io.on('connection', (socket) => {
-    const previousId = socket.id;
     let profileDATA = {};
 
     Utils.logger.info(`User connected, SocketId: ${socket.id}`);
     socket.emit('welcome', socket.id);
 
     // callMessage propagation from peer1 to peer2
-    socket.on('callMessage', (data, callback) => callMessage({ socket, data, callback }));
+    socket.on('callMessage', (data) => callMessage({ socket, data}));
+
+    // this function runs only one time to set previousSocketId.
+    function myFunction() {
+      if (!myFunction.initialized) {
+        previousSocketId = socket.id;
+        myFunction.initialized = true;
+      }
+    }
+    myFunction.initialized = false;
+
+    // periodically check for changes in socket.id
+    myFunction.initialized && setInterval(() => {
+      if (socket.id !== previousSocketId) {
+        previousSocketId = socket.id;
+        Utils.io.to(data.to).emit(
+          'socketIdChanged',
+        );
+        if(Object.keys(profileDATA).length !== 0) {
+          postSocket(profileDATA, socket.id, post);
+        } else{
+          Utils.logger.info(`Socket ID changed but not updated on DB`);
+        }
+        Utils.logger.info(`Socket ID changed: ${socket.id}`);
+      }
+    }, 3000);
   
     socket.on('consultease_user_profile_data', (profileData) => {
       console.log('\nReceived consultease profile data:', profileData,'\n');

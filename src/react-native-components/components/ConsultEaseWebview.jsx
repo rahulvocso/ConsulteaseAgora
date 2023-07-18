@@ -73,11 +73,9 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
         break;
       case 'consulteaseUserProfileData':
         {
-          console.log(
-            'Message received to set consulteaseUserProfileData from ConsultEase(InputVideoCallDetails.jsx)!!!',
-            "**message type**", messageType,
-            "**message data**", messageData.fname,
-          );
+          console.log('Message received to set consulteaseUserProfileData from ConsultEase(InputVideoCallDetails.jsx)!!! \n',
+            "**message type**", messageType,);
+          console.log("\n**message data** \n", messageData)
           if (messageData) {
             dispatch({ type: 'SET_CONSULTEASE_USER_PROFILE_DATA', payload: messageData })
           }

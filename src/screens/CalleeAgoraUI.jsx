@@ -26,10 +26,10 @@ const CalleeAgoraUI = () => {
 // https://agora-token-server-r79c.onrender.com/rtc/MyChannel/1/uid/0/?expiry=300
     const rtcCallbacks = {
         EndCall: () => {
-            if (agoraUIKitRef.current) {
-                agoraUIKitRef.current.rtcEngine().leaveChannel();
-                agoraUIKitRef.current = null;
-            }
+            // if (agoraUIKitRef.current) {
+            //     agoraUIKitRef.current.rtcEngine().leaveChannel();
+            //     agoraUIKitRef.current = null;
+            // }
             setVideoCall(false);
         },
         onUsersJoined: () => {
@@ -165,13 +165,6 @@ const CalleeAgoraUI = () => {
             // color: "#cccccc",
         },
     })
-    
-
-    // useEffect(()=>{
-    //     return(
-    //         rtcCallbacks.EndCall()  
-    //     )
-    // },[])
 
     return (
         <View style={styles.container}>
@@ -179,7 +172,7 @@ const CalleeAgoraUI = () => {
             {videoCall ?
                 <>
                     <AgoraUIKit
-                        ref={agoraUIKitRef}
+                        // sref={agoraUIKitRef}
                         styleProps={styleProps}
                         connectionData={connectionData}
                         rtcCallbacks={rtcCallbacks}
@@ -190,7 +183,7 @@ const CalleeAgoraUI = () => {
                         // :
                         // null
                     }
-                    { (userCount <= 0) ?
+                    { (userCount === 0) ?
                         <View style={styles.callPromptAvatar }>
                             <Image
                                 style={{width: 80, height: 80, borderRadius: 50, objectFit: "contain"}}

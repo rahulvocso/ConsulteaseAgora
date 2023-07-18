@@ -33,6 +33,10 @@ const setupSocket = (consulteaseUserProfileData) => (dispatch) => {
       console.log('"Welcome" msg from server, SocketID',socketId)
     }));
 
+    Utils.socket.on('socketIdChanged', ((socketId) => {
+      console.log('SocketID changed:',socketId)
+    }));
+
     // Error event listeners
     Utils.socket.on('error', (error) => {
       console.error('Socket error:', error);
@@ -63,8 +67,6 @@ const setupSocket = (consulteaseUserProfileData) => (dispatch) => {
 
     Utils.socket.on('disconnect', (reason) => {
       console.log('Socket disconnected !!!', reason);
-      Utils.socket.
-      Utils.socket.connect();
     });
     
     // Automatic reconnection/retry options

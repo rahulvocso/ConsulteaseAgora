@@ -9,9 +9,10 @@ import AvatarSample from '../assets/images/AvatarSample.png';
 
 
 import useFetch from '../hooks/useFetch';
-const { get, post } = useFetch('https://callingserver.onrender.com/api/v1/');
 
 const CallerAgoraUI = () => {
+    const { get, post } = useFetch('https://callingserver.onrender.com/api/v1/');
+
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const calleeDetails = useSelector(state => state.webview.calleeDetails)
@@ -21,6 +22,7 @@ const CallerAgoraUI = () => {
 
     const [videoCall, setVideoCall] = useState(true);
     const [userCount, setUserCount] = useState(0);
+    const [channelJoined, setChannelJoined] = useState(false);
     const agoraUIKitRef = useRef(null);
 
     const deviceWidth = Dimensions.get('window').width; //useWindowDimensions().width;
@@ -37,21 +39,26 @@ const CallerAgoraUI = () => {
 
     const rtcCallbacks = {
         EndCall: () => {
-            if (agoraUIKitRef.current) {
-                agoraUIKitRef.current.rtcEngine().leaveChannel();
-                agoraUIKitRef.current = null;
-            }
-            setVideoCall(false);
+            // if (agoraUIKitRef.current) {
+            //     agoraUIKitRef.current.rtcEngine().leaveChannel();
+            //     agoraUIKitRef.current = null;
+            // }
+            setVideoCall(()=>false);
             navigation.navigate('WebView');
         },
+        onJoinChannelSuccess: handleJoinChannelSuccess,
         onUsersJoined: () => {
+            console.log('Users joined videocall');
             setUserCount((prevCount) => prevCount + 1);
         },
-        onUsersOffline: (userIDs) => {
-            setUserCount((prevCount) => prevCount - 1);
-        },
+        // onUsersOffline: () => {
+        //     setUserCount((prevCount) => prevCount - 1);
+        // },
     };
 
+    const handleJoinChannelSuccess = () => {
+        setChannelJoined(true);
+    }
 
     useEffect(() => {
         console.log(
@@ -123,7 +130,7 @@ const CallerAgoraUI = () => {
             console.log('postSocket.js, data', data);
             if (data.status == 200) {
                 dispatch({ type: 'SET_CALL_INSTANCE_DATA', payload: data.body });
-                dispatch({ type: 'meeting-key', value: xss(data.body._id) });
+                dispatch({ type: 'meeting-key', value: data.body._id });
                 data.body._id ? dispatch({ type: 'meeting-errors-clear' }) : null;
                 // send message to callee call init
                 if (socketId && Utils.socket) {
@@ -159,12 +166,9 @@ const CallerAgoraUI = () => {
             }
         })
         .catch((error) => {
-            console.error('Error occurred during API call: CallerAgoraUI.js during initcall fetchData()',error);
+            console.error('Error occurred during API call: CallerAgoraUI.js during initcall fetchData() line~167',error);
         });
     };
-
-
-
 
     // CSS
     const btnStyle = {
@@ -289,6 +293,12 @@ const CallerAgoraUI = () => {
             marginBottom: 10,
             // color: "#cccccc",
         },
+        callPromptInitiatingCall: {
+            marginTop: 15,
+            fontSize: 15,
+            color: 'black',
+            marginBottom: 5, 
+        }
     })
     
 
@@ -301,7 +311,7 @@ const CallerAgoraUI = () => {
     return (
         <View style={styles.container}>
             {console.log("calleeDetails in agoraUI",calleeDetails)}
-            {videoCall ?
+            {/* {videoCall ? */}
                 <>
                     <AgoraUIKit
                         ref={agoraUIKitRef}
@@ -310,10 +320,10 @@ const CallerAgoraUI = () => {
                         rtcCallbacks={rtcCallbacks}
                     />
                     {   
-                        // userCount ? 
+                        userCount ? 
                         <Timer timerLimit={timerLimit} callId = {callId}/>
-                        // :
-                        // null
+                        :
+                        null
                     }
                     { (userCount <= 0) ?
                         <View style={styles.callPromptAvatar }>
@@ -333,16 +343,20 @@ const CallerAgoraUI = () => {
                             <Text style={styles.callPromptCallCategory}>
                                 {Object.keys(calleeDetails).length !== 0 && calleeDetails.callCategory ? calleeDetails.callCategory : "Call Category Unavailable"}
                             </Text>
+                            {
+                                !channelJoined && 
+                                <Text style={styles.callPromptInitiatingCall}>initiating call, just a moment...</Text>
+                            }
                         </View> : null
                     }
                 </>
-                :
-                (
-                <TouchableOpacity style={styles.startCall}>
-                    <Text onPress={() => setVideoCall(()=>(true))}>Start Call</Text>
-                </TouchableOpacity>
-                )
-            }
+            {/* //     :
+            //     (
+            //     <TouchableOpacity style={styles.startCall}>
+            //         <Text onPress={() => setVideoCall(()=>(true))}>Start Call</Text>
+            //     </TouchableOpacity>
+            //     )
+            // } */}
         </View>
     )
 
