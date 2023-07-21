@@ -344,7 +344,7 @@ const CallerAgoraUI = () => {
                         rtcCallbacks={rtcCallbacks}
                     />
                     {   
-                        !timeoutRenderFlag ? 
+                        (!timeoutRenderFlag && callID )? 
                         <Timer timerLimit={timerLimit} callId = {callID}/>
                         :
                         null
