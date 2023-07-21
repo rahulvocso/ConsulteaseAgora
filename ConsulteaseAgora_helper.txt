@@ -52,7 +52,7 @@ Android Studio:
 		(usually android/app/release.apk) depending where you selected during first step(in Build/Generate signed(bundle/apk)/apk prompt)
 
 	To generate release build for Android Playstore:
-		Build/Generate signed(bundle/apk)/abb(android app bundle first option
+		Build/Generate signed(bundle/apk)/abb(android app bundle first option)
 		then same procedure as above
 			
 
