@@ -24,7 +24,7 @@ ios/.xcode.env.local
 
 
 # android app size too big can't push to github
-android/app/release/app-release.apk
+android/app/release/
 
 # Android/IntelliJ
 #

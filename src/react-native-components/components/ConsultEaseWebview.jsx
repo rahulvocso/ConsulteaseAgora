@@ -223,8 +223,8 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
             // uri: 'http://192.168.0.138:3056',
             // uri: 'https://vocso.com',
             // uri: 'https://super-cajeta-000cea.netlify.app'
-            // uri: 'https://consultease-webview.netlify.app'
-            uri: 'https://consultease.netlify.app' // https://consultease-webview.netlify.app
+            uri: 'https://consultease-webview.netlify.app'
+            // uri: 'https://consultease.netlify.app' // https://consultease-webview.netlify.app
           }
             // : undefined
         }

@@ -1,0 +1,75 @@
+*** - Note Important
+
+Email = rahul@vocso.com
+password = vocso#123@
+
+Projects repo on Github account - rahul@vocso.com
+
+Netlify email as above ,password - Vocso#123@ for react-frontend hosted webview link
+
+Description       Repo Name
+Main Project  - ConsulteaseAgora
+Socket server - Socket-Server-ConsultEase
+
+Render.com hosted projects - login with above email
+	-Agora Token Server(token is needed in CallerAgoraUI and CalleeAgoraUI to connect with agora server)
+	-Socket-Server-Consultease
+
+ConsulteaseAgora/ :
+***/src may contain test or past files in folders that are no longer needed(not much) delete/remove cautiously after reading codebase***.
+
+android/
+	/app/src/main/res/raw contains ringtone file
+	/app/src/main/res contains mipmap files(different files for different pixel density),if you want 
+	to change app icon
+
+
+src/react-frontend contains consultease ionic react frontend
+	***starting react-frontend in local env, you might encounter metro related errors because of parent folder
+	ConsulteaseAgora having different configs,in that case copy paste this folder to different location outside 
+	ConsulteaseAgora then 'npm start'
+
+
+src/socket contains socket related code although it contains socket-client folder,
+	socket-client side code is implenented with store/action/index.js. so you can delete socket-client folder
+	if you want.
+
+src/socket/socket-server socket-server is base for Socket-Server-ConsultEase(github repo)
+
+
+Android Studio:
+	To run app start emulator first or connect a android device with usb debugging enabled in developer options
+	after setting emulator/android device cd inside ConsulteaseAgora and enter commands these serially:
+		adb reverse tcp:8081 tcp:8081
+		yarn start
+		press r anytime to hot reload ***if and only if code changes are not visible after saving
+		any file changes.
+	To generate release build for ***testing:
+		Build/Generate signed(bundle/apk)/apk then in prompt select keystore file path to 
+		Consultease/android fill necessary detains  and then see build log in bottom navigation(Build -hammer icon)
+		in Android Studio
+		After build you'll get a prompt on bottom right screen to locate apk folder location
+		(usually android/app/release.apk) depending where you selected during first step(in Build/Generate signed(bundle/apk)/apk prompt)
+
+	To generate release build for Android Playstore:
+		Build/Generate signed(bundle/apk)/abb(android app bundle first option
+		then same procedure as above
+			
+
+
+	Build/clean to clean the project(caches)
+	Buils/rebuild to rebuild(after running Build/clean)
+
+Note -  App not properly tested becausee of release build not working,
+	removed lot of bugs but still might be present so even if release build doesn't work and
+	you want to test changes (***this is a workaround i tried, not recommended time consuming) do following:
+	
+	Run debug build on a android smartphone by clicking android studio run/play icon on top right.
+	Login into consultease with one account(mobile no.) after staring metro(adb reverse tcp:8081 tcp:8081 then npm/yarn start inside ConsulteaseAgora),
+	navigate to some paths(fiddle around app).
+	Detach this device connect another smartphone and run debug build by clicking android studio run/play icon on top right again then
+	starting metro bunndler again by 'adb reverse tcp:8081 tcp:8081 then yarn start'
+	login another mobile no. (fiddle around navigating paths in app)
+	Now you can initiate call from one app and connect to another 
+	*** for any file changes you have to follow the whole process all over again on both devices.
+
