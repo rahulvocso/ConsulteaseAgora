@@ -7,15 +7,13 @@ import { NativeModules } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Utils from './src/utils';
 import Actions from './src/store/actions';
 
-import io from 'socket.io-client';
 
-import Sample from './src/react-native-components/components/Sample'
 import CallerAgoraUI from './src/screens/CallerAgoraUI';
 import CalleeAgoraUI from './src/screens/CalleeAgoraUI';
 
@@ -50,6 +48,7 @@ function App() {
   //     auth_token:
   //       'eyJhbGciOiJIUzI1NiJ9.NjM5ODU0YWY3OWNlYTYyNjgwNzY4OGJh.Z9xf4J2JpqUEb_2-5ObYFLrCbRRe8IeJZ3NDwXltKkE',
   //   };
+  
 
   useEffect(() => {
     if (!socketId && Object.keys(consulteaseUserProfileData).length !== 0) {
@@ -103,7 +102,8 @@ function App() {
               dispatch({ type: 'SET_INCOMING_CALL_DETAILS', payload: message });
               dispatch({ type: 'SET_CALL_INSTANCE_DATA', payload: message.callInstanceData });
               dispatch({ type: 'SET_PEER_SOCKET_ID', payload: message.from });
-              dispatch({ type: 'meeting-key', value: message.callInstanceData._id });
+              dispatch({ type: 'SET_CALL_ID', value: message.callID });
+              dispatch({ type: 'SET_AGORA_CHANNEL', payload: message.agoraChannel })
               console.log(
                 'Call ************ Incoming "videocall" callmessage received App.js useEffect line~111********',
                 message,
@@ -141,6 +141,9 @@ function App() {
             message.response === 'busy'
               ? (navigation.navigate('WebView'), console.log('user is busy on another call')) // pending: add a popup to display user is busy or play some sound
               : null;
+            message.response === 'notAnswered'
+              ? (navigation.navigate('WebView'), console.log('user did not answered the call')) // pending: add a popup to display user didn't answer or play some sound
+              : null;
             // message.response === 'disconnected'  // pending: implement this logic in videocall component to reduce code redundancy for both caller and callee
             //   ?
             //   :
@@ -173,6 +176,7 @@ function App() {
           header: ()=>(null),
         }}
       >
+          {/* <Stack.Screen name="VideoCalleePrompt" component={VideoCalleePromptScreen} /> */}
           <Stack.Screen name="WebView" component={ConsultEaseWebview} />
           <Stack.Screen name="CallerAgoraUI" component={CallerAgoraUI}/>
           <Stack.Screen name="CalleeAgoraUI" component={CalleeAgoraUI}/>

@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 function useFetch(baseUrl) {
   // const [loading, setLoading] = useState(true);
 

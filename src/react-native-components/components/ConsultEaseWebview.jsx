@@ -10,8 +10,10 @@ import {
   Text,
   useColorScheme,
   View,
+  Dimensions,
   useWindowDimensions,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -26,11 +28,17 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { WebView } from 'react-native-webview';
+import ConsultaseLogo from '../../assets/images/app-logo.png';
+import NetworkStatus from './NetworkStatus'
 
 
 function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const deviceWidth = Dimensions.get('window').width; //useWindowDimensions().width;
+  const deviceHeight = Dimensions.get('window').height; //useWindowDimensions().height;
+
   const [isNetConnected, setIsNetConnected] = useState(false)
   const [renderedOnce, setRenderedOnce] = useState(false);
   const webviewRef = useRef();
@@ -86,32 +94,32 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
         break;
     }
   }
-  
-  function reloadWebviewOnConnectionChange() {
-    NetInfo.fetch().then((state) => {
-      if (state.isConnected) {
-        webviewRef.current.reload();
-        setIsNetConnected(true)
-        console.log('netconnected',true)
-      } 
-      else if(!state.isConnected){
-        setIsNetConnected(false)
-        // unsubscribeRef.current();
-      }
-    });
-  
-    unsubscribeRef.current = NetInfo.addEventListener((state) => {
-      if (state.isConnected) {
-        webviewRef.current.reload();
-        setIsNetConnected(true)
-        // unsubscribeRef.current();
-      } 
-      else if(!state.isConnected){
-        setIsNetConnected(false)
-        // unsubscribeRef.current();
-      }
-    });
-  }
+
+  // useEffect(()=>{
+  //   NetInfo.fetch().then((state) => {
+  //     if (state.isConnected) {
+  //       // webviewRef.current.reload();
+  //       setIsNetConnected(true)
+  //       console.log('Netconnected in Webview',true)
+  //     } 
+  //     else if(!state.isConnected){
+  //       setIsNetConnected(false)
+  //     }
+
+  //     unsubscribeRef.current = NetInfo.addEventListener((state) => {
+  //       if (state.isConnected) {
+  //         webviewRef.current.reload();
+  //         setIsNetConnected(true)
+  //       } 
+  //       else if(!state.isConnected){
+  //         setIsNetConnected(false)
+  //       }
+  //     });
+  //   })
+  //   return(()=>{
+  //     unsubscribeRef.current();
+  //   })
+  // },[])
   
   // const sendMessageToWebview = `
   //   import {useHistory} from 'react-router';
@@ -138,17 +146,60 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
   //   webviewRef.current.postMessage(`window.postMessage('${'messageFromWebviewContainer'}', '*');`);
   // }, []);
 
-  // useEffect(() => {
-  //   unsubscribeRef.current = NetInfo.addEventListener((state) => {
-  //     setIsNetConnected(state.isConnected);
-  //   });
-  //   return () => {
-  //     if (unsubscribeRef.current) {
-  //       unsubscribeRef.current();
-  //       unsubscribeRef.current = null;
-  //     }
-  //   };
-  // }, []);
+  const styles = StyleSheet.create({
+    webview: {
+      flex: 1,
+    },
+    noConnectionPage: {
+      position: 'absolute',
+      color: 'white',
+      border: 2,
+      borderColor: 'red',
+      height: deviceHeight,
+      width: deviceWidth,
+      // top: '40%',
+      // backgroundColor: '#3DB271',
+    },
+    noConnectionContainer: {
+      flex: 1,
+      justifyContent : 'center',
+      alignItems: 'center',
+      backgroundColor: '#3DB271',
+      width: '100%',
+      border: 2,
+      borderColor: 'red',
+    },
+    consulteaseLogo: {
+      width: deviceWidth/2,
+      height: deviceHeight/4,
+      objectFit: "contain",
+      marginBottom: 10,
+    },
+    noConnectionText1: {
+      fontSize: 25,
+      marginBottom: 10
+    },
+    noConnectionText2: {
+      fontSize: 15,
+      marginBottom: 50,
+    },
+    sectionContainer: {
+      marginTop: 32,
+      paddingHorizontal: 24,
+    },
+    sectionTitle: {
+      fontSize: 24,
+      fontWeight: '600',
+    },
+    sectionDescription: {
+      marginTop: 8,
+      fontSize: 18,
+      fontWeight: '400',
+    },
+    highlight: {
+      fontWeight: '700',
+    },
+  });
 
 
   return (
@@ -160,110 +211,76 @@ function ConsultEaseWebview({setIsCallViewOn, setCalleeDetails}) {
         // height: useWindowDimensions().height,
         backgroundColor: isDarkMode ? (isNetConnected ? Colors.black : '#3DB271') : Colors.white,
       }}>
-      {/* {isNetConnected ? */}
-        <WebView
-          ref={webviewRef}
-          originWhitelist={['*']}
-          //injectedJavaScript={runScript}
-          source={
-            // renderedOnce
-            //   ? 
-            {
-              // uri: 'http://10.0.2.2:3056',
-              // uri: 'http://192.168.0.138:3056',
-              // uri: 'https://vocso.com',
-              // uri: 'https://6453486d4c12434c3bbc8bcc--consultease.netlify.app'
-              // uri: 'https://64620df4656dba0fe21fb01b--super-cajeta-000cea.netlify.app'
-              // uri: 'https://super-cajeta-000cea.netlify.app'
-              // uri: 'https://consultease-webview.netlify.app'
-              uri: 'https://consultease.netlify.app' // https://consultease-webview.netlify.app
-            }
-              // : undefined
+      <WebView
+        ref={webviewRef}
+        originWhitelist={['*']}
+        //injectedJavaScript={runScript}
+        source={
+          // renderedOnce
+          //   ? 
+          {
+            // uri: 'http://10.0.2.2:3056',
+            // uri: 'http://192.168.0.138:3056',
+            // uri: 'https://vocso.com',
+            // uri: 'https://super-cajeta-000cea.netlify.app'
+            // uri: 'https://consultease-webview.netlify.app'
+            uri: 'https://consultease.netlify.app' // https://consultease-webview.netlify.app
           }
-          style={{ 
-            flex: 1,
-            minWidth: useWindowDimensions().width,
-            maxHeight: useWindowDimensions().height,
-            borderRadius: 1,
-            borderBottomColor: '#396967',
-          }}
-          allowsBackForwardNavigationGestures
-          allowsInlineMediaPlayback
-          allowFileAccess={true}
-          allowUniversalAccessFromFileURLs={true}
-          allowFileAccessFromFileURLs={true}
-          allowsFullscreenVideo
-          domStorageEnabled={true}
-          javaScriptEnabled
-          javaScriptEnabledAndroid={true}
-          // onError={(syntheticEvent) => {
-          //   const { nativeEvent } = syntheticEvent;
-          //   console.warn('WebView error: ', nativeEvent);
-          //   reloadWebviewOnConnectionChange();
-          // }}
-          // onLoad={updateSource}
-          onMessage={ (event) => handleWebViewMessage(event) }
-
-          scalesPageToFit={true}
-          scrollEnabled={true}
-          showsHorizontalScrollIndicator={false}
-        />
-      {/* :
+            // : undefined
+        }
+        style={{ 
+          flex: 1,
+          minWidth: useWindowDimensions().width,
+          maxHeight: useWindowDimensions().height,
+          borderRadius: 1,
+          borderBottomColor: '#396967',
+        }}
+        allowsBackForwardNavigationGestures
+        allowsInlineMediaPlayback
+        allowFileAccess={true}
+        allowUniversalAccessFromFileURLs={true}
+        allowFileAccessFromFileURLs={true}
+        allowsFullscreenVideo
+        domStorageEnabled={true}
+        javaScriptEnabled
+        javaScriptEnabledAndroid={true}
+        // onError={(syntheticEvent) => {
+        //   const { nativeEvent } = syntheticEvent;
+        //   console.warn('WebView error: ', nativeEvent);
+        //   reloadWebviewOnConnectionChange();
+        // }}
+        // onLoad={updateSource}
+        onMessage={ (event) => handleWebViewMessage(event) }
+        scalesPageToFit={true}
+        scrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
+      />
+      { !!!isNetConnected
+        ?
         // no internet connection screen view
-        <View style={styles.noConnectionContainer}>
-          <ConsultaseLogo
-            width={150} 
-          />
-          <Text style={styles.noConnectionText1}>
-            Oops!!! looks like you're not connected &#128279; to internet &#127760;
-          </Text>
-          <Text style={styles.noConnectionText2}>
-            Please check your internet connection 
-          </Text>
+        <View style={styles.noConnectionPage}>
+          <View style={styles.noConnectionContainer}>
+            <Image
+              style={styles.consulteaseLogo}
+              source={ConsultaseLogo}
+            />
+            <Text style={styles.noConnectionText1}>
+              Oops!!! looks like you're not connected to internet &#127760; 
+            </Text>
+            <Text style={styles.noConnectionText2}>
+              Please check your internet connection 
+            </Text>
+          </View>
         </View>
-      } */}
+        :null
+      }
+      <NetworkStatus
+        isNetConnected={isNetConnected}
+        setIsNetConnected={setIsNetConnected}
+        webviewRef ={webviewRef}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  webview: {
-    flex: 1,
-  },
-  noConnectionContainer: {
-    flex: 1,
-    justifyContent : 'center',
-    alignItems: 'center',
-    // marginTop: 150,
-    marginLeft: 20,
-    marginRight: 20,
-    marginBottom: 200
-    
-  },
-  noConnectionText1: {
-    fontSize: 35,
-    marginTop: 50
-  },
-  noConnectionText2: {
-    fontSize: 20,
-    // marginBottom: 50,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default ConsultEaseWebview;

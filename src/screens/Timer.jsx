@@ -71,8 +71,6 @@ const Timer = ( {timerLimit, callId = 'not available'} ) => {
     <Text style={styles.topProgressBarText}>
       {`${formatTime(timePassedHrMinSec.hr)}:${formatTime(timePassedHrMinSec.min)}:${formatTime(timePassedHrMinSec.sec)} passed`}
     </Text>
-    
-    <Text style={styles.topProgressBarText}>#{callId}</Text>
 
     {
       timeRemaining <= 300 &&  // time remaining will be shown only when time left <=300 seconds i.e 5 mins.
@@ -81,6 +79,7 @@ const Timer = ( {timerLimit, callId = 'not available'} ) => {
       </Text>
     }
       
+    <Text style={styles.topProgressBarText}>#{callId}</Text>
   </View>
   )
 };

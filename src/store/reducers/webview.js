@@ -3,6 +3,7 @@ const initialState = {
   isCallViewOn: false,
   consulteaseUserProfileData: {},
   calleeDetails: {},
+  // calleeRingtone: null,
   callerDetails: {
     name: undefined,
     callCategory: undefined,
@@ -13,6 +14,8 @@ const initialState = {
   },
   calleeSocketId: undefined,
   peerSocketID: undefined,
+  agoraChannel: undefined,
+  callID: undefined,
   callInstanceData: undefined,
   proceedToJoinCall: false,
   incomingCallDetails: undefined,
@@ -35,6 +38,12 @@ function reducer(state = initialState, action) {
         ...state,
         calleeDetails: action.payload,
       };
+
+    // case 'SET_CALLEE_RINGTONE':
+    //   return {
+    //     ...state,
+    //     calleeRingtone: action.payload,
+    //   }
 
     case 'SET_CALLER_DETAILS':
       return {
@@ -69,6 +78,18 @@ function reducer(state = initialState, action) {
 
     case 'RESET_WEBVIEW_DERIVED_DATA':
       return state;
+
+    case 'SET_CALL_ID':
+      return {
+        ...state,
+        callID: action.payload,
+      }
+
+    case 'SET_AGORA_CHANNEL':
+      return {
+        ...state,
+        agoraChannel: action.payload,
+      }
 
     case 'SET_CALL_INSTANCE_DATA':
       return {

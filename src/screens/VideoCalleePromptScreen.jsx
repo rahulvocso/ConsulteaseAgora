@@ -56,7 +56,7 @@ const VideoCalleePromptScreen = () => {
 
   const dispatch = useDispatch();
   const socketId = useSelector((state) => state.webview.socket.id);
-
+  const peerSocketID = useSelector((state) => state.webview.peerSocketID);
   const deviceWidth = Dimensions.get('window').width; //useWindowDimensions().width;
   const deviceHeight = Dimensions.get('window').height; //useWindowDimensions().height;
 
@@ -67,8 +67,9 @@ const VideoCalleePromptScreen = () => {
   const componentUnmountTimeoutRef =  useRef();
   const soundTimeoutRef = useRef();
   const [incomingCallAnswer, setIncomingCallAnswer]  = useState();
-
+  const sound = useRef(null)
   const [localStream, setLocalStream] = useState(null);
+
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -91,69 +92,91 @@ const VideoCalleePromptScreen = () => {
     };
   }, []);
 
+  const maxDuration = 40000; //40sec = 40000 mili sec
+    let audioDuration;
+    // InCallManager.setForceSpeakerphoneOn(true);
+    // InCallManager.start();
+    function loadSound(){
+      sound.current = new Sound('instagram_videocall_ringtone.mp3', Sound.MAIN_BUNDLE , error => {
+        if (error) {
+          console.log('******Failed to load the .current', error);
+        } else {
+          console.log('******Ringtone set', error ? error : '');
+          //.current.play();
+          audioDuration = (sound.current.getDuration() * 1000);
+          sound.current.setNumberOfLoops(-1);
+          sound.current.setVolume(1.0);
+          // sound.setLooping(true); // Set the audio to play in a loop
+          setRingtone(sound.current);
+        }
+      });
+    }
+
   useEffect(() => {
-    // dispatch(Actions.Media.getLocalVideo());
-    // dispatch(Actions.Media.getLocalAudio());
-    console.log('callerDetails inside VideoCalleePrompt',callerDetails)
-    console.log('callerDetails.photo inside VideoCalleePrompt', callerDetails.photo)
-    InCallManager.setForceSpeakerphoneOn(true);
-    InCallManager.start();
-    const sound = new Sound('instagram_videocall_ringtone', Sound.MAIN_BUNDLE , error => {
-      if (error) {
-        console.log('******Failed to load the sound', error);
-      } else {
-        console.log('******Ringtone set', error);
-        setRingtone(sound);
-      }
-    });
-    const maxDuration = 40000;
-    const ringtoneDuration = (sound.getDuration() * 1000);
-    const audioDuration = ringtoneDuration <= maxDuration ? (sound.getDuration() * 1000) : maxDuration;
+    console.log('callerDetails inside VideoCalleePromptScreen',callerDetails)
+    console.log('callerDetails.photo inside VideoCalleePromptScreen', callerDetails.photo)
+
+    !ringtone ? loadSound() : null;
+    
+    const ringtoneDuration = audioDuration <= maxDuration ? (sound.getDuration() * 1000) : maxDuration;
 
     let timeoutId;
-    InCallManager.setForceSpeakerphoneOn(true);
+    // InCallManager.setForceSpeakerphoneOn(true);
     const playAudioInLoop = () => {
-      sound.play();
-      InCallManager.setForceSpeakerphoneOn(true);
-      // soundTimeoutRef.current = setTimeout(playAudioInLoop, audioDuration);
+      // InCallManager.setForceSpeakerphoneOn(true);
+      sound.current.play();
+      sound.current.setNumberOfLoops(-1);
+      sound.current.setVolume(1.0);
+      soundTimeoutRef.current = setTimeout(playAudioInLoop, audioDuration);
     };
 
-     playAudioInLoop();
-
-    // Schedule the next audio loop after the loopDuration
-    // const ringtoneIntervalId = setInterval(() => {
-    //    sound.play();
-    //   //   (success, error) => {
-    //   //   if (success) {
-    //   //     // Set the audio mode to earpiece initially
-    //   //     console.log('****Ringtone Sound played successfully');
-    //   //     //InCallManager.start({ media: 'audio' });
-    //   //   // InCallManager.setForceSpeakerphoneOn(ringtoneOnSpeaker);
-    //   //   } else {
-    //   //     console.log('**** Ringtone Sound playback failed',error);
-    //   //   }
-    //   // });
-    // })
+    !ringtone ? playAudioInLoop() : null;
 
     //component unmount code starts
-    // componentUnmountTimeoutRef.current = setTimeout(() => {
-    //   setShouldComponentUnmount(true);
-    // }, maxDuration);
-    //component unmount duration code ends
+    componentUnmountTimeoutRef.current = setTimeout(() => {
+      if(sound.current){
+        sound.current.stop();
+        // InCallManager.stop();
+        sound.current.release();
+      }
+      clearTimeout(soundTimeoutRef.current);
+      !proceedToJoinCall && clearTimeout(componentUnmountTimeoutRef.current);
+      setShouldComponentUnmount(true);
+    }, maxDuration);
 
     return () => {
-      if(sound){
-        sound.stop();
+      if(sound.current){
+        sound.current.stop();
         InCallManager.stop();
-        sound.release();
+        sound.current.release();
       }
-      //clearInterval(ringtoneIntervalId);
+      localStream && localStream.release();
       clearTimeout(soundTimeoutRef.current);
-      !proceedToJoinCall && clearTimeout(componentUnmountTimeoutRef);
+      !proceedToJoinCall && clearTimeout(componentUnmountTimeoutRef.current);
     }
   }, []);
 
+  useEffect(()=>{
+    shouldComponentUnmount && 
+    (()=>{
+      console.log("******Navigating to webview, component_mount/call_prompt duration completed, call not answered by callee!!"),
+      Utils.socket.emit("callMessage",
+      {
+          type: 'calleeResponse',
+          from: socketId,
+          to: incomingCallDetails.from,
+          response: 'notAnswered',
+      });
+      localStream && localStream.release();
+      dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: false });
+      dispatch({ type: 'SET_CALL_VIEW_ON', payload: false });
+      dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' });
+      navigation.navigate('WebView');
+    })()
+  },[shouldComponentUnmount])
+
   function handleCallAccept(){
+    clearTimeout(componentUnmountTimeoutRef.current);
     dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: true })
     if (socketId) {
       (socketId && Utils.socket) ? (
@@ -164,6 +187,11 @@ const VideoCalleePromptScreen = () => {
           response: 'accepted'
       })) : null;
       console.log('handleCallAccept() VideoCalleePromptScreen sending call accept message to caller');
+      if(sound.current){
+        sound.current.stop();
+        sound.current.release();
+      }
+      localStream && localStream.release();
       navigation.navigate('CalleeAgoraUI');
     }  
   }
@@ -180,6 +208,11 @@ const VideoCalleePromptScreen = () => {
         }
       )) : null;
     }
+    if(sound.current){
+      sound.current.stop();
+      sound.current.release();
+    }
+    localStream && localStream.release();
     dispatch({ type: 'PROCEED_TO_JOIN_CALL', payload: false }),
     dispatch({ type: 'SET_CALL_VIEW_ON', payload: false });
     dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' });
@@ -298,7 +331,7 @@ const VideoCalleePromptScreen = () => {
       alignItems: 'center', //to lower call buttons
       alignContent: 'center',
       position: 'absolute',
-      bottom: 8,
+      bottom: 22,
       // borderWidth: 2,
       // borderColor: 'red',
       width: deviceWidth,
@@ -348,16 +381,15 @@ const VideoCalleePromptScreen = () => {
             </View>
 
             <View style={styles.callPromptBottomContainer}>
-                <TouchableOpacity onPress={()=>{
-                  handleCallReject();
-                }} >
-                  <SvgXml xml={rejectCallIcon} width="70" height="70" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={() => {
-                    handleCallAccept();
-                    setIncomingCallAnswer(true)
-                }}>
+                  <TouchableOpacity onPress={()=>{handleCallReject()}}>
+                    <SvgXml xml={rejectCallIcon} width="70" height="70" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                        handleCallAccept();
+                        setIncomingCallAnswer(true);
+                    }}
+                  >
                   <SvgXml xml={acceptCallIcon} width="70" height="70" />
                 </TouchableOpacity>
             </View>

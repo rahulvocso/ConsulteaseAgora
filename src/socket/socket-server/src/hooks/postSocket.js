@@ -19,7 +19,7 @@ function postSocket (profileData = {}, socketId = '', post) {
             Utils.logger.error(`******Unsuccessfull  socket  postSocket.js socket_id ${socketId} POST \n`)
          }
       }).catch((error) => {
-        Utils.logger.error('Error occurred during API call: postSocket.js ');
+        console.log(`Error occurred during API call: postSocket.js ${error}`);
       })
 
     } else{

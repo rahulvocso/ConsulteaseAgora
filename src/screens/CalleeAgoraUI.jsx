@@ -1,25 +1,27 @@
 import React, {useEffect, useRef, useState} from 'react';
 import AgoraUIKit from 'agora-rn-uikit';
 import {StyleSheet, Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import Timer from './Timer';
 import AvatarSample from '../assets/images/AvatarSample.png';
 
 const CalleeAgoraUI = () => {
+    const dispatch = useDispatch()
+    const navigation = useNavigation();
     const calleeDetails = useSelector(state => state.webview.calleeDetails)
     const [videoCall, setVideoCall] = useState(false);
     const [userCount, setUserCount] = useState(0);
     const agoraUIKitRef = useRef(null);
-
+    const agoraChannel = useSelector((state)=> state.webview.agoraChannel)
     const deviceWidth = Dimensions.get('window').width; //useWindowDimensions().width;
     const deviceHeight = Dimensions.get('window').height; //useWindowDimensions().height;
     const timerLimit = 305; //in seconds
-    const callId = '#CallID0000000000000';
+    const callID = useSelector((state) => state.webview.callID);
 
     const connectionData = {
         appId: 'f917fce6942947b69d5623487404d8cf',
-        channel: 'test123',
+        channel: agoraChannel,
         tokenUrl : 'https://agora-token-server-r79c.onrender.com'
         
     };
@@ -30,15 +32,33 @@ const CalleeAgoraUI = () => {
             //     agoraUIKitRef.current.rtcEngine().leaveChannel();
             //     agoraUIKitRef.current = null;
             // }
-            setVideoCall(false);
+            setVideoCall(()=>false);
+            navigation.navigate('WebView');
         },
-        onUsersJoined: () => {
-            setUserCount((prevCount) => prevCount + 1);
+        onJoinChannelSuccess: () => {
+            setChannelJoined(true);
         },
-        onUsersOffline: (userIDs) => {
-            setUserCount((prevCount) => prevCount - 1);
+        // onUsersJoined: () => {
+        //     console.log('Users joined videocall');
+        //     setUserCount((prevCount) => prevCount + 1);
+        // },
+        userJoined: (user) => {
+            setUserCount(prevUsers => prevUsers + 1);
         },
+        userOffline: (user) => {
+            setUserCount(prevUsers => prevUsers - 1);
+        }
+        // onUsersOffline: () => {
+        //     setUserCount((prevCount) => prevCount - 1);
+        // },
     };
+
+    useEffect(()=>{
+        return(()=>{
+            dispatch({ type: 'SET_CALL_VIEW_ON', payload: false });
+            dispatch({ type: 'RESET_WEBVIEW_DERIVED_DATA' });
+        })
+    },[])
 
 
     // CSS
@@ -166,10 +186,11 @@ const CalleeAgoraUI = () => {
         },
     })
 
+
     return (
         <View style={styles.container}>
             {console.log("calleeDetails in agoraUI",calleeDetails)}
-            {videoCall ?
+            {agoraChannel &&
                 <>
                     <AgoraUIKit
                         // sref={agoraUIKitRef}
@@ -177,13 +198,9 @@ const CalleeAgoraUI = () => {
                         connectionData={connectionData}
                         rtcCallbacks={rtcCallbacks}
                     />
-                    {   
-                        // userCount ? 
-                        <Timer timerLimit={timerLimit} callId = {callId}/>
-                        // :
-                        // null
-                    }
-                    { (userCount === 0) ?
+                    <Timer timerLimit={timerLimit} callId = {callID}/> 
+                    {/* implement sending call data back to server after call has ended*/}
+                    {/* {(userCount === 0 && !channelJoined) ?
                         <View style={styles.callPromptAvatar }>
                             <Image
                                 style={{width: 80, height: 80, borderRadius: 50, objectFit: "contain"}}
@@ -202,19 +219,11 @@ const CalleeAgoraUI = () => {
                                 {Object.keys(calleeDetails).length !== 0 && calleeDetails.callCategory ? calleeDetails.callCategory : "Call Category Unavailable"}
                             </Text>
                         </View> : null
-                    }
+                    } */}
                 </>
-                :
-                (
-                <TouchableOpacity style={styles.startCall}>
-                    <Text onPress={() => setVideoCall(()=>(true))}>Start Call</Text>
-                </TouchableOpacity>
-                )
             }
         </View>
     )
-
 }
-
 
 export default CalleeAgoraUI;
