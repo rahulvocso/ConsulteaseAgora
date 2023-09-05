@@ -44,10 +44,10 @@ export const Header = ({
   const {get, loading} = useFetch('https://callingserver.onrender.com/api/v1/');
   const auth_token = localStorage.getItem('auth_token');
   const [balance, setBalance] = useState('***');
-
+  
   type === 'home' &&
     balance === '***' &&
-    get(`wallet/getWallet?&wallet_id=630876ba8bbefcf932188e55`, {
+    get(`wallet/getWallet`, {
       //set wallet_id empty for default user profile
       auth_token: auth_token,
     }).then(data => {
